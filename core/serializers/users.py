@@ -3,7 +3,8 @@ from core.models import Users
 import json
 
 
-class UserSerializer(Schema):
+class UserSchema(Schema):
+    id = fields.Integer()
     name = fields.Field()
     last_name = fields.String()
     email = fields.Email()

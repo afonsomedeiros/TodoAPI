@@ -1,3 +1,3 @@
-from .users import UserSerializer
+from .users import UserSchema
 
-__all__ = ["UserSerializer"]
+__all__ = ["UserSchema"]
