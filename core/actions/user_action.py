@@ -3,8 +3,7 @@ from marshmallow import ValidationError
 
 from core.models import Users
 from core.serializers import UserSchema
-from core.utils.kit import serializer_date
-import json
+from core.utils.kit import serializer_error
 
 
 def list_user(*args, **kwargs):
@@ -12,7 +11,7 @@ def list_user(*args, **kwargs):
                            Users.email, Users.birthday, Users.created_at,
                            Users.updated_at).execute()
     schema = UserSchema(many=True)
-    data = schema.dump(users, many=True)
+    data = schema.dumps(users, many=True)
     response.content_type = "application/json"
     return data
 
@@ -39,11 +38,7 @@ def create_user(*args, **kwargs):
         user.save()
         return schema.dump(user)
     except ValidationError as err:
-        error_response = {
-            'err_messages': err.messages,
-            'err_valid_data': err.valid_data
-        }
-        return json.dumps(error_response, default=serializer_date)
+        return serializer_error(err.messages, err.valid_data)
 
 
 def update_user(*args, **kwargs):
@@ -55,8 +50,4 @@ def update_user(*args, **kwargs):
         user.save()
         return schema.dump(user)
     except ValidationError as err:
-        error_response = {
-            'err_messages': err.messages,
-            'err_valid_data': err.valid_data
-        }
-        return json.dumps(error_response, default=serializer_date)
+        return serializer_error(err.messages, err.valid_data)

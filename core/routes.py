@@ -1,5 +1,5 @@
 from bottle import Bottle
-from .actions import user_action
+from .actions import user_action, task_action
 
 
 def create_user_route(app: Bottle):
@@ -12,6 +12,17 @@ def create_user_route(app: Bottle):
         return user_action.view_user(*args, **kwargs)
 
 
+def create_task_route(app: Bottle):
+    app.get('/tasks/', callback=task_action.list_task)
+    app.post('/tasks/new/', callback=task_action.create_task)
+    app.put('/tasks/update/', callback=task_action.update_task)
+
+    @app.get('/tasks/<task_id:int>/')
+    def task_view(*args, **kwargs):
+        return task_action.view_task(*args, **kwargs)
+
+
 def create_routes(app: Bottle):
 
     create_user_route(app)
+    create_task_route(app)

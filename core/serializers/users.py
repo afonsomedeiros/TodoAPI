@@ -15,6 +15,6 @@ class UserSchema(Schema):
     def make_user(self, data, **kwargs):
         return Users(**data)
 
-    @post_dump(pass_many=True)
+    """@post_dump(pass_many=True)
     def correct_serializer(self, data, many, **kwargs):
-        return json.dumps(str(data), ensure_ascii=False)
+        return json.dumps(data, ensure_ascii=False)"""
