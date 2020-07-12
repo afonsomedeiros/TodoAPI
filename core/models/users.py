@@ -1,7 +1,7 @@
 from data.engine import TimeStampBaseModel
 from settings import SECRET
 
-from peewee import CharField, DateField
+from peewee import CharField, DateField, DoesNotExist
 from passlib.hash import pbkdf2_sha512 as hsh
 from hashlib import md5
 

@@ -14,12 +14,3 @@ def serializer_error(err_message, err_valid_data):
         'err_valid_data': err_valid_data
     }
     return json.dumps(error_response, default=serializer_date)
-
-
-def remove_password(objs: list):
-    for i in range(0, len(objs)):
-        if isinstance(objs[i], Users):
-            objs[i].password = None
-        else:
-            objs[i].user.password = None
-    return objs

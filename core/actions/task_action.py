@@ -1,28 +1,28 @@
 from bottle import request, response
 from marshmallow import ValidationError
-
 from core.models import Tasks, Users
 from core.serializers import TaskSchema, UserSchema
-from core.utils.kit import serializer_error, remove_password
+from core.utils.kit import serializer_error
 
 
 def list_task():
-    tasks = remove_password(Tasks.select())
+    tasks = Tasks.select()
     schema = TaskSchema(many=True)
     response.content_type = "application/json"
     return schema.dumps(tasks)
 
 
 def view_task(*args, **kwargs):
-    task = remove_password([Tasks.get(Tasks.id==kwargs['task_id'])])[0]
+    task = Tasks.get(Tasks.id==kwargs['task_id'])
     schema = TaskSchema()
     response.content_type = "application/json"
     return schema.dumps(task)
 
 
-def create_task():
+def create_task(*args, **kwargs):
     """
         Alterar a forma de autenticacao de usuário para utilizar usuario da sessao.
+
     """
     response.content_type = "application/json"
     try:
@@ -31,7 +31,7 @@ def create_task():
         post_data['user'] = {}
         schema = TaskSchema(partial=True)
         task = schema.load(post_data)
-        task.user = remove_password([Users.get_by_id(user_id)])[0]
+        task.user = Users.get_by_id(user_id)
         task.save()
         return schema.dumps(task)
     except ValidationError as err:
@@ -51,7 +51,6 @@ def update_task():
         task = schema.load(post_data)
         task.user = task_aux.user
         task.save()
-        task = remove_password([task])[0]
         return schema.dumps(task)
     except ValidationError as err:
         response.status_code = 417

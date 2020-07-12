@@ -8,6 +8,7 @@ bottle = "*"
 peewee = "*"
 passlib = "*"
 marshmallow = "*"
+python-jose = "*"
 
 [dev-packages]
 pylint = "*"

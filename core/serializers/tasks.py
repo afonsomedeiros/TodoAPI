@@ -8,7 +8,7 @@ class TaskSchema(Schema):
     id = fields.Integer()
     title = fields.String()
     description = fields.String()
-    user = fields.Nested(UserSchema)
+    user = fields.Nested(UserSchema, exclude=["password"])
     is_active = fields.Boolean()
     finished_at = fields.DateTime()
 

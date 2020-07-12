@@ -1,5 +1,6 @@
 from bottle import Bottle
 from .actions import user_action, task_action
+from core.ext import auth_required
 
 
 def create_user_route(app: Bottle):
