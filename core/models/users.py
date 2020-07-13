@@ -1,5 +1,5 @@
 from data.engine import TimeStampBaseModel
-from settings import SECRET
+from settings import SECRET, DATE_FORMAT
 
 from peewee import CharField, DateField, DoesNotExist
 from passlib.hash import pbkdf2_sha512 as hsh
@@ -9,9 +9,9 @@ from hashlib import md5
 class Users(TimeStampBaseModel):
     name = CharField(max_length=50)
     last_name = CharField(max_length=50)
-    email = CharField(max_length=200)
+    email = CharField(max_length=200, unique=True)
     password = CharField(max_length=300)
-    birthday = DateField()
+    birthday = DateField(null=True, format=DATE_FORMAT)
 
     def gen_hash(self):
         _secret = md5(SECRET.encode()).hexdigest()

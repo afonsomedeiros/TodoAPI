@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, post_load, post_dump
 from core.models import Users
-import json
+from settings import DATE_FORMAT, DATETIME_FORMAT
 
 
 class UserSchema(Schema):
@@ -9,14 +9,11 @@ class UserSchema(Schema):
     last_name = fields.String()
     email = fields.Email()
     password = fields.String()
-    birthday = fields.Date()
-    created_at = fields.DateTime()
-    updated_at = fields.DateTime()
+    birthday = fields.Date(format=DATE_FORMAT)
+    created_at = fields.DateTime(format=DATETIME_FORMAT)
+    updated_at = fields.DateTime(format=DATETIME_FORMAT)
 
     @post_load
     def make_user(self, data, **kwargs):
         return Users(**data)
 
-    """@post_dump(pass_many=True)
-    def correct_serializer(self, data, many, **kwargs):
-        return json.dumps(data, ensure_ascii=False)"""

@@ -8,16 +8,29 @@ from core.utils.kit import serializer_error
 
 
 def view_user(user):
-    schema = UserSchema()
+    """Visualiza informações sobre usuário Logado.
+
+    Args:
+        user (Peewee Model): Classe que trará informações do banco de dados.
+
+    Returns:
+        str: Usuário serializado com as informações necessárias.
+    """
+    schema = UserSchema(exclude=['password'])
     data = schema.dump(user)
     response.content_type = "application/json"
     return data
 
 
 def create_user():
+    """Cadatrar usuários.
+
+    Returns:
+        str: Retorna dados dos usuários cadastrados.
+    """
     response.content_type = "application/json"
     try:
-        schema = UserSchema()
+        schema = UserSchema(exclude=['password'])
         user = schema.load(request.json)
         user.gen_hash()
         user.save()
@@ -27,9 +40,17 @@ def create_user():
 
 
 def update_user(user):
+    """atualizar dados dos usuários.
+
+    Args:
+        user (Peewee Model): Classe que abstrai tabela de usuários do banco.
+
+    Returns:
+        str: Retorna dados dos usuários atualizados.
+    """
     response.content_type = "application/json"
     try:
-        schema = UserSchema()
+        schema = UserSchema(exclude=['password'])
         user.save()
         return schema.dump(user)
     except ValidationError as err:

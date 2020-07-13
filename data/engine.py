@@ -1,6 +1,6 @@
 from peewee import SqliteDatabase, DateTimeField
 from playhouse.signals import Model, pre_save
-from settings import ROOT_PATH
+from settings import ROOT_PATH, DATETIME_FORMAT
 import datetime
 
 
@@ -18,8 +18,8 @@ class TimeStampBaseModel(Base):
     """
         classe que provê TimeStamp.
     """
-    created_at = DateTimeField()
-    updated_at = DateTimeField()
+    created_at = DateTimeField(formats=DATETIME_FORMAT)
+    updated_at = DateTimeField(formats=DATETIME_FORMAT)
 
 
 @pre_save(sender=TimeStampBaseModel)
