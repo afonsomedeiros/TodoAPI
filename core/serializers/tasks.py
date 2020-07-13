@@ -11,6 +11,8 @@ class TaskSchema(Schema):
     user = fields.Nested(UserSchema, exclude=["password"])
     is_active = fields.Boolean()
     finished_at = fields.DateTime()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
 
     @post_load
     def make_user(self, data, **kwargs):

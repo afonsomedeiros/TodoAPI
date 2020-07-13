@@ -3,55 +3,57 @@ from marshmallow import ValidationError
 from core.models import Tasks, Users
 from core.serializers import TaskSchema, UserSchema
 from core.utils.kit import serializer_error
+from peewee import DoesNotExist
+import datetime
 
 
-def list_task():
-    tasks = Tasks.select()
+def list_task(user):
+    response.content_type = "application/json"
     schema = TaskSchema(many=True)
+    try:
+        tasks = Tasks.select().where(Tasks.user==user)
+        return schema.dumps(tasks)
+    except DoesNotExist as err:
+        response.content_type = 404
+        return schema.dumps(Tasks(title="Não encontrado", description="Tarefa não localizada ou não existe."))
+
+
+def view_task(user, task_id):
     response.content_type = "application/json"
-    return schema.dumps(tasks)
-
-
-def view_task(*args, **kwargs):
-    task = Tasks.get(Tasks.id==kwargs['task_id'])
     schema = TaskSchema()
-    response.content_type = "application/json"
-    return schema.dumps(task)
+    try:
+        task = Tasks.get(Tasks.id==task_id, Tasks.user==user)
+        return schema.dumps(task)
+    except DoesNotExist as err:
+        response.status = 404
+        return schema.dumps(Tasks(title="Não encontrado",
+                                  description="Tarefa não localizada ou não existe.",
+                                  user=user,
+                                  is_active=False,
+                                  finished_at=datetime.date.today()))
 
 
-def create_task(*args, **kwargs):
-    """
-        Alterar a forma de autenticacao de usuário para utilizar usuario da sessao.
-
-    """
+def create_task(user):
     response.content_type = "application/json"
     try:
-        post_data = request.json
-        user_id = post_data['user']
-        post_data['user'] = {}
         schema = TaskSchema(partial=True)
-        task = schema.load(post_data)
-        task.user = Users.get_by_id(user_id)
+        task = schema.load(request.json)
+        task.user = user
         task.save()
         return schema.dumps(task)
     except ValidationError as err:
-        response.status_code = 417
+        response.status = 417
         return serializer_error(err.messages, err.valid_data)
 
 
-def update_task():
-    """
-        Alterar a forma de autenticacao de usuário para utilizar usuario da sessao.
-    """
+def update_task(user):
     response.content_type = "application/json"
     try:
-        post_data = request.json
         schema = TaskSchema(partial=True)
-        task_aux = Tasks.get_by_id(post_data['id'])
-        task = schema.load(post_data)
-        task.user = task_aux.user
+        task = schema.load(request.json)
+        task.user = user
         task.save()
         return schema.dumps(task)
     except ValidationError as err:
-        response.status_code = 417
+        response.status = 417
         return serializer_error(err.messages, err.valid_data)

@@ -9,6 +9,7 @@ peewee = "*"
 passlib = "*"
 marshmallow = "*"
 python-jose = "*"
+jwt-bottle = "*"
 
 [dev-packages]
 pylint = "*"

@@ -10,6 +10,8 @@ class UserSchema(Schema):
     email = fields.Email()
     password = fields.String()
     birthday = fields.Date()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
 
     @post_load
     def make_user(self, data, **kwargs):

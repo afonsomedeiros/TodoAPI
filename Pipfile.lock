@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "52c340506d2f8cec6cd3dc3554453027e1a4396f209351ffd4402c382e2981c3"
+            "sha256": "69110db993a360d3323da28b1af52f459a0e5db260e82bf3d867e8b67a0ed160"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,14 @@
                 "sha256:8f12ac317f8a1318efa75757ef0a651abe12e51fc1af8838fb91079445227277"
             ],
             "version": "==0.15"
+        },
+        "jwt-bottle": {
+            "hashes": [
+                "sha256:244f6e16e6cd6a365b4cebdec60b9e674eb44d61159ceca7862f268eb6928d43",
+                "sha256:3fb7398cfef424392812391584f080940ea23123022582e3ec3964b0a01045dc"
+            ],
+            "index": "pypi",
+            "version": "==2020.7.12"
         },
         "marshmallow": {
             "hashes": [
@@ -71,6 +79,12 @@
                 "sha256:fec3e9d8e36808a28efb59b489e4528c10ad0f480e57dcc32b4de5c9d8c9fdf3"
             ],
             "version": "==0.4.8"
+        },
+        "pycrypto": {
+            "hashes": [
+                "sha256:f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c"
+            ],
+            "version": "==2.6.1"
         },
         "python-jose": {
             "hashes": [
