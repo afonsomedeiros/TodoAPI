@@ -1,6 +1,6 @@
 from data.engine import TimeStampBaseModel
 from peewee import CharField, DateTimeField, ForeignKeyField, BooleanField
-
+from settings import DATETIME_FORMAT
 from .users import Users
 
 
@@ -10,4 +10,4 @@ class Tasks(TimeStampBaseModel):
     description = CharField(max_length=500, null=True)
     user = ForeignKeyField(Users)
     is_active = BooleanField(default=False)
-    finished_at = DateTimeField(null=True)
+    finished_at = DateTimeField(null=True, formats=DATETIME_FORMAT)

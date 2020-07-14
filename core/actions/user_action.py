@@ -30,10 +30,11 @@ def create_user():
     """
     response.content_type = "application/json"
     try:
-        schema = UserSchema(exclude=['password'])
+        schema = UserSchema()
         user = schema.load(request.json)
         user.gen_hash()
         user.save()
+        user.password = None
         return schema.dump(user)
     except ValidationError as err:
         return serializer_error(err.messages, err.valid_data)
