@@ -18,8 +18,8 @@ class TimeStampBaseModel(Base):
     """
         classe que provê TimeStamp.
     """
-    created_at = DateTimeField(formats=DATETIME_FORMAT)
-    updated_at = DateTimeField(formats=DATETIME_FORMAT)
+    created_at = DateTimeField()
+    updated_at = DateTimeField()
 
 
 @pre_save(sender=TimeStampBaseModel)

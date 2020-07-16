@@ -107,6 +107,14 @@ def view_task(user, task_id):
 def create_task(user):
     """cadastrar nova tarefa para usuário logado.
 
+    Schema create:
+    {
+        "title": "Titulo da tarefa.",
+        "description": "Descrição da Tarefa.",
+        "is_active": true,
+        "finished_at": "quando a tarefa será finalizada."
+    }
+
     Args:
         user (Peewee Model): Classe que abstrai usuários do banco.
 
@@ -128,6 +136,15 @@ def create_task(user):
 
 def update_task(user):
     """Atualizar tarefa.
+
+    Schema update:
+    {
+        "id": , -> int
+        "title": "", -> str
+        "description": "", -> str
+        "is_active": true, -> boolean
+        "finished_at": "" -> date (str format: dia-mes-ano)
+    }
 
     Args:
         user (Peewee Model): Classe que abstrai usuários no banco de dados

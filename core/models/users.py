@@ -11,7 +11,7 @@ class Users(TimeStampBaseModel):
     last_name = CharField(max_length=50)
     email = CharField(max_length=200, unique=True)
     password = CharField(max_length=300)
-    birthday = DateField(null=True, formats=DATE_FORMAT)
+    birthday = DateField(null=True)
 
     def gen_hash(self):
         _secret = md5(SECRET.encode()).hexdigest()

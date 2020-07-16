@@ -10,6 +10,7 @@ passlib = "*"
 marshmallow = "*"
 python-jose = "*"
 jwt-bottle = "*"
+ipython = "*"
 
 [dev-packages]
 pylint = "*"
