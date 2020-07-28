@@ -55,6 +55,7 @@ def create_user():
         user.password = ""
         return schema.dump(user)
     except ValidationError as err:
+        response.status = 422
         return serializer_error(err.messages, err.valid_data)
 
 
