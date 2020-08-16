@@ -89,6 +89,7 @@ def update_user(user):
             user.email = data['email']
         if 'birthday' in data:
             user.birthday = data['birthday']
+        user.save()
         return schema.dump(user)
     except ValidationError as err:
         return serializer_error(err.messages, err.valid_data)
